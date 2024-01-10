@@ -1,4 +1,5 @@
 from sendEmail import sendMail
+import random
 
 running = True
 
@@ -7,6 +8,8 @@ def imprimirListas():
             print(str(i+1) + ".- Nombre: " + lista_de_participantes[i] + " , Correo: " + lista_de_correos[i])
 
 while running:
+    random.seed()
+
     print("Bienvenido a un programa para hacer un intercambio automatico")
     print("Ingresa los nombres de los participantes, cuando no haya mas ingresa X")
 
@@ -49,7 +52,7 @@ while running:
         imprimirListas()
 
     #Eliminacion de algun participante
-    print("Quieres eliminar a alguien antes de continuar?, SI o NO")
+    print("Quieres eliminar a alguien antes de continuar?, SI o NO: ")
     eliminar = input("SI o NO")
     while eliminar == "SI":
         if len(lista_de_participantes) - 1 > 2:
@@ -71,6 +74,28 @@ while running:
             if continuar == "NO":
                 print("ok")
 
+    #Realizar Intercambio
+    def Intercambio():
+        lista_desechable = lista_de_participantes.copy()
+        parejas = {}
+
+        for i in range(len(lista_de_participantes)):
+            if len(lista_desechable) == 1 and lista_desechable[0] == lista_de_participantes[i]:
+            # Manejar el caso especial cuando queda una última persona
+                print("No se puede hacer un intercambio con una sola persona.")
+                return
+
+            destino = random.choice(lista_desechable)
+
+            while destino == lista_de_participantes[i]:
+                destino = random.choice(lista_desechable)
+
+            lista_desechable.remove(destino)
+            parejas[str(lista_de_participantes[i])] = str(destino)
+
+        print(parejas)
+
+    Intercambio()
     
     running = False
 
