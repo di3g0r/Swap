@@ -75,27 +75,45 @@ while running:
                 print("ok")
 
     #Realizar Intercambio
+    parejas = {}
     def Intercambio():
         lista_desechable = lista_de_participantes.copy()
-        parejas = {}
 
-        for i in range(len(lista_de_participantes)):
-            if len(lista_desechable) == 1 and lista_desechable[0] == lista_de_participantes[i]:
-            # Manejar el caso especial cuando queda una última persona
-                print("No se puede hacer un intercambio con una sola persona.")
+        while lista_desechable:
+            persona_actual = lista_desechable.pop(0)
+            posible_destino = [p for p in lista_desechable if p != persona_actual]
+
+            if not posible_destino:
+                # Manejar el caso especial cuando no hay opciones disponibles excepto regalarse a sí mismo
+                print("No se puede hacer un intercambio sin regalarse a sí mismo. Reinicia el proceso.")
                 return
 
-            destino = random.choice(lista_desechable)
-
-            while destino == lista_de_participantes[i]:
-                destino = random.choice(lista_desechable)
-
+            destino = random.choice(posible_destino)
             lista_desechable.remove(destino)
-            parejas[str(lista_de_participantes[i])] = str(destino)
+            parejas[persona_actual] = destino
 
-        print(parejas)
+        
 
     Intercambio()
+
+    print(parejas)
+
+    #Enviar correos
+    for i in range(0,len(lista_de_participantes)):
+        receiver = lista_de_participantes[i]
+        receiver_email = lista_de_correos[i]
+
+        gift_receiver = parejas[receiver]
+
+        message = """\
+        Hola """ + receiver + """ en este intercambio deberas regalarle a... """ + gift_receiver + """!!!"""
+
+        message["Subject"] = "Tu amigo secreto es..."
+
+        sendMail(receiver_email, message)
+
+    print("Terminado")
+
     
     running = False
 
