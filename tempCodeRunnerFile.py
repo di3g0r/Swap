@@ -1,0 +1,1 @@
+window.configure(bg = bgcolor)

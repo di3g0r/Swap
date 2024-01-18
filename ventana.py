@@ -14,9 +14,10 @@ window.configure(bg = bgcolor)
 def saludar():
     print("¡Hola, mundo!")
 
+
 welcome = tk.Label(window, text= 'SWAP', bg = bgcolor, justify = 'center',fg = "white", font = ('Arial', 50)).place(relx = 0.5, rely= 0.3, anchor = 'center')
 
-start = tk.Button(window, text="START", command = participants(window), bg = 'red', justify = 'center',fg = "white", font = ('Arial', 20)).place(relx = 0.5, rely= 0.6, anchor = 'center')
+start = tk.Button(window, text="START", command = lambda:participants(window), justify = 'center',fg = "black", font = ('Arial', 20)).place(relx = 0.5, rely= 0.6, anchor = 'center')
 
 
 window.resizable(True, True) 
